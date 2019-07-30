@@ -44,7 +44,7 @@ extension LinkedList {
     
     public func isEmpty() -> Bool {
         var result = true
-        if let llHead = head { // Head being non-nil for non-empty Linked List
+        if let _ = head { // Head being non-nil for non-empty Linked List
             result = false
         }
         return result
@@ -117,7 +117,11 @@ extension LinkedList: CustomStringConvertible {
         var tempNode = self.first
         
         while tempNode != nil {
-            text = text + " --> " + "\(tempNode?.value)"
+            if tempNode == self.first {
+                text = text + "\(tempNode!.value)"
+            } else {
+                text = text + " --> " + "\(tempNode!.value)"
+            }
             tempNode = tempNode?.next
         }
         text = text + "]"
@@ -167,20 +171,73 @@ extension LinkedList {
     }
     
     public func insertAtTail(_ value: Type) {
-        let newNode = LinkedListNode.init(value)
-        
-        if self.head == nil && self.tail == nil {
-            self.head = newNode
-            self.tail = newNode
-        } else {
-            let tempTailNode = (self.tail)!
-            tempTailNode.next = newNode
-            newNode.next = nil
-            self.tail = newNode
+
+        let newNode = LinkedListNode(value)
+        newNode.next = nil
+        self.tail?.next = newNode
+        self.tail = newNode
+        if self.head == nil {
+            self.head = self.tail
         }
     }
     
+    // TODO: More condition checks can be added here
     public func deleteAtIndex(_ index: Int) {
-        
+        if self.isEmpty() {
+            print("Can not delete node from empty linked list")
+        } else if index > self.count - 1 || index < 0 {
+            print("Invalid Linked List Node index. Can not delete node...")
+        } else if index == 0 {
+            if self.count == 1 {
+                self.head = nil
+                self.tail = nil
+            } else {
+                self.head = head?.next
+            }
+        } else if index == self.count - 1 {
+            self.tail = nodeAtIndex(index - 1)
+        } else {
+            let tempNode = nodeAtIndex(index - 1)
+            tempNode?.next = nodeAtIndex(index)
+        }
     }
+}
+
+
+// ------------------------------------------------------------------
+// Detect Loop
+// Explanation of Looping alorithm: https://www.youtube.com/watch?v=apIw0Opq5nk
+// ------------------------------------------------------------------
+extension LinkedList {
+    
+    public func detectLoop() -> (Bool, node?) {
+        
+        var loopDetected = false
+        var fastPointer = self.head
+        var slowPointer = self.head
+        
+        var loopingNode: node?
+        
+        while slowPointer?.next != nil {
+            fastPointer = fastPointer?.next?.next
+            slowPointer = slowPointer?.next
+            
+            if slowPointer == fastPointer {
+                loopingNode = slowPointer
+                loopDetected = true
+                break
+            }
+        }
+        return (loopDetected, loopingNode)
+    }
+}
+
+// ------------------------------------------------------------------
+// Reverse a Singly Linked List
+// Recursively: https://www.youtube.com/watch?v=MRe3UsRadKw
+// Iteratively: https://www.youtube.com/watch?v=XwIivDg1BlY
+// ------------------------------------------------------------------
+
+extension LinkedList {
+    
 }
