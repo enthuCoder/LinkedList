@@ -60,3 +60,33 @@ if result.0 == true, let value = result.1?.value {
     print("No Loop found\n")
 }
 
+// ---------------------------------
+// Detecting loop in the linked list
+// ---------------------------------
+print("After Reversing Linked List Iteratively\n")
+myLinkedList.reverseLL_Iterative()
+print("Head: \(myLinkedList.head!.value) --  Tail: \(myLinkedList.tail!.value)")
+
+print("After Reversing Linked List Recursively\n")
+myLinkedList.reverseLL_Recursively()
+print("Head: \(myLinkedList.head!.value) --  Tail: \(myLinkedList.tail!.value)")
+
+
+print("Delete Middle Node, head or tail not known")
+
+let deleteTestLinkedList = LinkedList<Character>()
+var newChar = Character.init("A")
+deleteTestLinkedList.insertAtTail(newChar)
+newChar = Character.init("B")
+deleteTestLinkedList.insertAtTail(newChar)
+newChar = Character.init("C")
+deleteTestLinkedList.insertAtTail(newChar)
+newChar = Character.init("D")
+deleteTestLinkedList.insertAtTail(newChar)
+newChar = Character.init("E")
+deleteTestLinkedList.insertAtTail(newChar)
+
+print("NewList b4 Delete: \(deleteTestLinkedList.description)")
+deleteTestLinkedList.deleteMiddleNode()
+print("NewList after Delete: \(deleteTestLinkedList.description)")
+

@@ -3,7 +3,7 @@ import Foundation
 // Linked List algorithms: [Playlist: Linked Lists] https://www.youtube.com/channel/UCMNkvKnD3mo3Jj9eTwJllWw
 
 // ==================================================================
-// Linked List Node
+// MARK: Linked List Node
 // ==================================================================
 
 public class LinkedListNode<Type>: NSObject {
@@ -24,7 +24,7 @@ public class LinkedListNode<Type>: NSObject {
 }*/
 
 // ==================================================================
-// Implement Linked List as a class
+// MARK: Implement Linked List as a class
 // ==================================================================
 public class LinkedList<Type> {
     
@@ -38,7 +38,7 @@ public class LinkedList<Type> {
 }
 
 // ------------------------------------------------------------------
-// Helper Functions
+// MARK: Helper Functions
 // ------------------------------------------------------------------
 extension LinkedList {
     
@@ -70,7 +70,7 @@ extension LinkedList {
 }
 
 // ------------------------------------------------------------------
-// Node At Index
+// MARK: Node At Index
 // ------------------------------------------------------------------
 
 extension LinkedList {
@@ -108,7 +108,7 @@ extension LinkedList {
 
 
 // ------------------------------------------------------------------
-// Print Description of the Linked List - Human Readable Format
+// MARK: Human Readable Format
 // ------------------------------------------------------------------
 extension LinkedList: CustomStringConvertible {
     
@@ -130,7 +130,7 @@ extension LinkedList: CustomStringConvertible {
 }
 
 // ------------------------------------------------------------------
-// Insert into Linked List
+// MARK: Insert into Linked List
 // ------------------------------------------------------------------
 
 extension LinkedList {
@@ -181,7 +181,7 @@ extension LinkedList {
         }
     }
     
-    // TODO: More condition checks can be added here
+    // TODO: More condition checks needs to be added here
     public func deleteAtIndex(_ index: Int) {
         if self.isEmpty() {
             print("Can not delete node from empty linked list")
@@ -205,7 +205,7 @@ extension LinkedList {
 
 
 // ------------------------------------------------------------------
-// Detect Loop
+// MARK: Detect Loop
 // Explanation of Looping alorithm: https://www.youtube.com/watch?v=apIw0Opq5nk
 // ------------------------------------------------------------------
 extension LinkedList {
@@ -233,11 +233,79 @@ extension LinkedList {
 }
 
 // ------------------------------------------------------------------
-// Reverse a Singly Linked List
+// MARK: Reverse a Singly Linked List
 // Recursively: https://www.youtube.com/watch?v=MRe3UsRadKw
 // Iteratively: https://www.youtube.com/watch?v=XwIivDg1BlY
 // ------------------------------------------------------------------
 
 extension LinkedList {
+    // O(n) time,
+    // O(1) space
+    public func reverseLL_Iterative() {
+        var prevNode: node? // as singly linked list doesn't has link to previous node, cache it
+        var currNode = self.head // Node to traverse the linked list
+        var nextNode: node? // Cache next node, as during reversing the link between two nodes, connectivity to next gets lost
+        
+        self.tail = self.head
+        
+        while currNode != nil {
+            nextNode = currNode?.next
+            currNode?.next = prevNode
+            prevNode = currNode
+            currNode = nextNode
+        }
+        self.head = prevNode
+        
+        print("Reversed Linked List: \(self.description)")
+    }
     
+    // O(n) time,
+    // O(n) space (due to recursion, each stack during recursion is cached in Stack memory)
+    public func reverseLL_Recursively() {
+        reverse_recursive(prev: nil, curr: self.head)
+        print("Reversed Linked List: \(self.description)")
+    }
+    
+    private func reverse_recursive(prev: node?, curr: node?) {
+        if curr == nil {
+            return
+        }
+        if curr?.next == nil {
+            self.head = curr
+            curr?.next = prev
+            return
+        }
+        reverse_recursive(prev: curr, curr: curr?.next)
+        curr?.next = prev
+    }
 }
+
+// ------------------------------------------------------------------
+// MARK: Pallindrome
+// ------------------------------------------------------------------
+
+
+// ------------------------------------------------------------------
+// Delete Middle node of a Linked List. You don't know head or tail node
+// https://www.youtube.com/watch?v=Cay6RsoIG78&index=4&list=PLamzFoFxwoNiAFTHWT-v7jtLAGbMn0Mar
+// B => A => D => E => F => C
+//           👆
+// ------------------------------------------------------------------
+
+extension LinkedList {
+    
+    public func deleteMiddleNode() {
+        deleteGivenNode(nodeAtIndex(2)!)
+    }
+
+    private func deleteGivenNode(_ node: LinkedListNode<Type>) {
+        let currValue = node.next?.value
+        if let currVal = currValue {
+            node.value = currVal
+            node.next = node.next?.next
+        }
+    }
+
+}
+
+
