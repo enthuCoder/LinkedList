@@ -81,12 +81,16 @@ newChar = Character.init("B")
 deleteTestLinkedList.insertAtTail(newChar)
 newChar = Character.init("C")
 deleteTestLinkedList.insertAtTail(newChar)
-newChar = Character.init("D")
+newChar = Character.init("B")
 deleteTestLinkedList.insertAtTail(newChar)
-newChar = Character.init("E")
+newChar = Character.init("A")
 deleteTestLinkedList.insertAtTail(newChar)
 
-print("NewList b4 Delete: \(deleteTestLinkedList.description)")
+print("NewList b4 Delete: \(deleteTestLinkedList.description) \n")
+
+print("Is this list Pallindrome: \(deleteTestLinkedList.isPallindrome()) \n")
+
 deleteTestLinkedList.deleteMiddleNode()
 print("NewList after Delete: \(deleteTestLinkedList.description)")
 
+print("Is this list Pallindrome: \(deleteTestLinkedList.isPallindrome()) \n")

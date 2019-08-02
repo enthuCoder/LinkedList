@@ -19,10 +19,6 @@ public class LinkedListNode<Type>: NSObject {
 //extension AnyType : Hashable {
 //
 
-/*extension LinkedListNode: Comparable where Type: Comparable {
-    
-}*/
-
 // ==================================================================
 // MARK: Implement Linked List as a class
 // ==================================================================
@@ -283,6 +279,54 @@ extension LinkedList {
 // ------------------------------------------------------------------
 // MARK: Pallindrome
 // ------------------------------------------------------------------
+
+extension LinkedList {
+    
+    public func isPallindrome() -> Bool {
+        var result = false
+        if self.count == 0 {
+            return result
+        } else if self.count == 1 {
+            result = true
+        } else {
+            // Compare with reversed list is same as original one
+            let origList = self
+            self.reverseLL_Recursively()
+            let reversedList = self
+            let maxIndex = self.count/2 + self.count % 2
+            
+            var currIndex = 0
+            result = true
+            while currIndex < maxIndex {
+                if origList.nodeAtIndex(currIndex) != reversedList.nodeAtIndex(currIndex) {
+                    result = false
+                    break
+                }
+                currIndex += 1
+            }
+        }
+        return result
+    }
+}
+
+extension LinkedListNode: Comparable where Type: Comparable {
+    
+    private func memoryAddress<Type>(of pointer: UnsafePointer<Type>) -> String {
+        return "\(pointer)"
+    }
+    
+    public static func == (lhs: LinkedListNode<Type>, rhs: LinkedListNode<Type>) -> Bool {
+        return lhs.value == rhs.value && (lhs.memoryAddress(of: &lhs.next) ==  rhs.memoryAddress(of: &rhs.next))
+    }
+    
+    public static func < (lhs: LinkedListNode<Type>, rhs: LinkedListNode<Type>) -> Bool {
+        return lhs.value < rhs.value
+    }
+    
+    public static func >= (lhs: LinkedListNode<Type>, rhs: LinkedListNode<Type>) -> Bool {
+        return lhs.value >= rhs.value
+    }
+}
 
 
 // ------------------------------------------------------------------
