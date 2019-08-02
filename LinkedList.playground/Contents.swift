@@ -94,3 +94,11 @@ deleteTestLinkedList.deleteMiddleNode()
 print("NewList after Delete: \(deleteTestLinkedList.description)")
 
 print("Is this list Pallindrome: \(deleteTestLinkedList.isPallindrome()) \n")
+
+
+
+
+// ==================================================================
+// Test the implementation - Doubly Linked List
+// ==================================================================
+
